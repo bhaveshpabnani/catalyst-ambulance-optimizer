@@ -18,7 +18,7 @@ const AboutUs: React.FC = () => {
             <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-xl">
                 <img 
-                  src="/lovable-uploads/4cec834c-0a51-45b7-97b2-7ac3bdd0fe7f.png" 
+                  src="/assets/Our_Team.avif" 
                   alt="Emergency medical service" 
                   className="w-full h-full object-cover"
                 />

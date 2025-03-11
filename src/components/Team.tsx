@@ -19,7 +19,7 @@ const Team: React.FC = () => {
           {/* Add delay classes to cards */}
           <div className="animate-on-scroll delay-200">
             <TeamCard 
-              image="/lovable-uploads/1719032267751.jpg"
+              image="/assets/1719032267751.jpg"
               name="Preet Panchal"
               role="Co-Founder & CEO"
               description="Preet is a third-year student pursuing Ocean Engineering and Naval Architecture with expertise in entrepreneurship and data analysis. He has significant experience in strategy development and business operations."
@@ -28,7 +28,7 @@ const Team: React.FC = () => {
           </div>
           <div className="animate-on-scroll delay-400">
             <TeamCard 
-              image="/lovable-uploads/2728e55e-0f58-46f6-9cd2-dce2267d35f2.png"
+              image="/assets/2728e55e-0f58-46f6-9cd2-dce2267d35f2.png"
               name="SSVKSS Jyothiraditya"
               role="Co-Founder & CTO"
               description="Jyothiraditya is a dynamic professional with expertise in AI, blockchain, and natural language processing. His technical prowess and problem-solving skills drive Catalyst's innovative technology."
@@ -37,7 +37,7 @@ const Team: React.FC = () => {
           </div>
           <div className="animate-on-scroll delay-600">
             <TeamCard 
-              image="/lovable-uploads/b19b8d18-f499-42bd-9a52-5e47a1924c09.png"
+              image="/assets/b19b8d18-f499-42bd-9a52-5e47a1924c09.png"
               name="Sarah Johnson"
               role="Head of Operations"
               description="Sarah brings over 8 years of healthcare operations experience to Catalyst. Her deep understanding of emergency services has been instrumental in developing our optimized response systems."

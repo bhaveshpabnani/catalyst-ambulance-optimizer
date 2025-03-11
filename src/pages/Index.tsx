@@ -23,12 +23,16 @@ const Index: React.FC = () => {
         <section id="about" className="animate-on-scroll">
           <AboutUs />
         </section>
+        <section id="stats" className="animate-on-scroll">
+          <Stats />
+        </section>
         <section id="features" className="animate-on-scroll">
           <Features />
         </section>
         <section id="team" className="animate-on-scroll">
           <Team />
         </section>
+        
         <section id="services" className="animate-on-scroll">
           <Testimonials />
         </section>
