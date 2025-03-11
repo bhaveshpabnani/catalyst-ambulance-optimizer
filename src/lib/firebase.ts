@@ -8,7 +8,7 @@ import { initializeApp } from "firebase/app";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyA_s2RUAVzV4qIcgPDer4jU4fx6qIjmqWQ",
-  authDomain: "catalyst-ambulance-optimizer.vercel.app", // Update this
+  authDomain: "catalyyst-62c65.firebaseapp.com",
   projectId: "catalyyst-62c65",
   storageBucket: "catalyyst-62c65.firebasestorage.app",
   messagingSenderId: "818115160308",
