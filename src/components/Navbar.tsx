@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
-import { ChevronDown, Menu, X, UserPlus } from "lucide-react";
+import { ChevronDown, Menu, X, UserPlus, User, LogOut } from "lucide-react";
 
 interface NavItem {
   label: string;
@@ -34,6 +34,36 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const servicesRef = useRef<HTMLDivElement>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkUser = () => {
+      const userStr = localStorage.getItem('user');
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        setIsLoggedIn(true);
+        setUserData(user);
+      } else {
+        setIsLoggedIn(false);
+        setUserData(null);
+      }
+    };
+
+    checkUser();
+    window.addEventListener('storage', checkUser);
+    return () => window.removeEventListener('storage', checkUser);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setIsLoggedIn(false);
+    setUserData(null);
+    setIsProfileOpen(false);
+    window.location.reload(); // Refresh to update all components
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,6 +87,20 @@ const Navbar: React.FC = () => {
     };
   }, [servicesRef]);
 
+  // Add this to your existing useEffect blocks
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setIsProfileOpen(false);
+      }
+    };
+  
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [profileRef]);
+
   const scrollToSection = (sectionId: string) => {
     setIsMenuOpen(false);
     
@@ -71,6 +115,58 @@ const Navbar: React.FC = () => {
         behavior: "smooth"
       });
     }
+  };
+
+  const renderAuthButtons = () => {
+    if (isLoggedIn) {
+      return (
+        <div className="relative" ref={profileRef}>
+          <button
+            onClick={() => setIsProfileOpen(!isProfileOpen)}
+            className="flex items-center space-x-2 text-gray-700 hover:text-catalyst-600"
+          >
+            <div className="w-8 h-8 rounded-full bg-catalyst-100 flex items-center justify-center">
+              {userData?.photoURL ? (
+                <img src={userData.photoURL} alt="Profile" className="w-8 h-8 rounded-full" />
+              ) : (
+                <User size={20} className="text-catalyst-600" />
+              )}
+            </div>
+            <span className="font-medium">{userData?.displayName || 'Profile'}</span>
+          </button>
+          
+          {isProfileOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+              <button
+                onClick={handleLogout}
+                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-catalyst-50 hover:text-catalyst-600 flex items-center"
+              >
+                <LogOut size={16} className="mr-2" />
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex items-center space-x-4">
+        <Link
+          to="/login"
+          className="text-catalyst-600 font-medium px-4 py-2 rounded-lg hover:bg-catalyst-50 transition-colors"
+        >
+          Login
+        </Link>
+        <Link
+          to="/signup"
+          className="bg-white border border-catalyst-500 text-catalyst-600 font-medium rounded-lg px-4 py-2 flex items-center transition-colors hover:bg-catalyst-50"
+        >
+          <UserPlus size={18} className="mr-2" />
+          Sign Up
+        </Link>
+      </div>
+    );
   };
 
   return (
@@ -127,22 +223,7 @@ const Navbar: React.FC = () => {
               )}
             </div>
           </div>
-          
-          <div className="flex items-center space-x-4">
-            <Link
-              to="/login"
-              className="text-catalyst-600 font-medium px-4 py-2 rounded-lg hover:bg-catalyst-50 transition-colors"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="bg-white border border-catalyst-500 text-catalyst-600 font-medium rounded-lg px-4 py-2 flex items-center transition-colors hover:bg-catalyst-50"
-            >
-              <UserPlus size={18} className="mr-2" />
-              Register
-            </Link>
-          </div>
+          {renderAuthButtons()} {/* Replace the old auth buttons with this */}
         </div>
         
         {/* Mobile Menu Button */}
@@ -211,14 +292,14 @@ const Navbar: React.FC = () => {
               to="/login"
               className="text-catalyst-600 font-medium text-center w-full px-4 py-2 rounded-lg border border-catalyst-200"
             >
-              Login
+              Log in
             </Link>
             <Link
-              to="/register"
+              to="/signup"
               className="bg-white border border-catalyst-500 text-catalyst-600 font-medium text-center w-full px-4 py-2 rounded-lg flex items-center justify-center"
             >
               <UserPlus size={18} className="mr-2" />
-              Register
+              Sign Up
             </Link>
           </div>
         </div>

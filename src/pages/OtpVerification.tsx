@@ -78,6 +78,7 @@ const OTPVerification: React.FC = () => {
     }
   };
 
+  // In your handleSubmit function
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const otpValue = otp.join("");
@@ -95,11 +96,16 @@ const OTPVerification: React.FC = () => {
 
     try {
       const result = await window.confirmationResult.confirm(otpValue);
-      // User is now signed in
       const user = result.user;
+      
+      // Store user data in localStorage
+      localStorage.setItem('userPhoneNumber', phoneNumber);
+      
       toast({
         title: "Success",
-        description: "Phone number verified successfully",
+        description: location.state?.isSignup 
+          ? "Account created successfully" 
+          : "Phone number verified successfully",
       });
       navigate("/");
     } catch (error: any) {
@@ -247,7 +253,7 @@ const OTPVerification: React.FC = () => {
                   fill="#EA4335"
                 />
               </svg>
-              Continue with Google
+              Google
             </button>
           </div>
 
