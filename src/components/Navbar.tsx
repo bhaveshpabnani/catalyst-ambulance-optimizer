@@ -120,32 +120,41 @@ const Navbar: React.FC = () => {
   const renderAuthButtons = () => {
     if (isLoggedIn) {
       return (
-        <div className="relative" ref={profileRef}>
-          <button
-            onClick={() => setIsProfileOpen(!isProfileOpen)}
-            className="flex items-center space-x-2 text-gray-700 hover:text-catalyst-600"
+        <div className="flex items-center space-x-4">
+          <Link
+            to="/register"
+            className="bg-white border border-catalyst-500 text-catalyst-600 font-medium rounded-lg px-4 py-2 flex items-center transition-colors hover:bg-catalyst-50"
           >
-            <div className="w-8 h-8 rounded-full bg-catalyst-100 flex items-center justify-center">
-              {userData?.photoURL ? (
-                <img src={userData.photoURL} alt="Profile" className="w-8 h-8 rounded-full" />
-              ) : (
-                <User size={20} className="text-catalyst-600" />
-              )}
-            </div>
-            <span className="font-medium">{userData?.displayName || 'Profile'}</span>
-          </button>
-          
-          {isProfileOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
-              <button
-                onClick={handleLogout}
-                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-catalyst-50 hover:text-catalyst-600 flex items-center"
-              >
-                <LogOut size={16} className="mr-2" />
-                Logout
-              </button>
-            </div>
-          )}
+            <UserPlus size={18} className="mr-2" />
+            Register
+          </Link>
+          <div className="relative" ref={profileRef}>
+            <button
+              onClick={() => setIsProfileOpen(!isProfileOpen)}
+              className="flex items-center space-x-2 text-gray-700 hover:text-catalyst-600"
+            >
+              <div className="w-8 h-8 rounded-full bg-catalyst-100 flex items-center justify-center">
+                {userData?.photoURL ? (
+                  <img src={userData.photoURL} alt="Profile" className="w-8 h-8 rounded-full" />
+                ) : (
+                  <User size={20} className="text-catalyst-600" />
+                )}
+              </div>
+              <span className="font-medium">{userData?.displayName || 'Profile'}</span>
+            </button>
+            
+            {isProfileOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+                <button
+                  onClick={handleLogout}
+                  className="w-full px-4 py-2 text-left text-gray-700 hover:bg-catalyst-50 hover:text-catalyst-600 flex items-center"
+                >
+                  <LogOut size={16} className="mr-2" />
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       );
     }
@@ -287,20 +296,41 @@ const Navbar: React.FC = () => {
             </div>
           </div>
           
+          // Update the mobile menu auth buttons section
           <div className="flex flex-col space-y-3 pt-2">
-            <Link
-              to="/login"
-              className="text-catalyst-600 font-medium text-center w-full px-4 py-2 rounded-lg border border-catalyst-200"
-            >
-              Log in
-            </Link>
-            <Link
-              to="/signup"
-              className="bg-white border border-catalyst-500 text-catalyst-600 font-medium text-center w-full px-4 py-2 rounded-lg flex items-center justify-center"
-            >
-              <UserPlus size={18} className="mr-2" />
-              Sign Up
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link
+                  to="/register"
+                  className="bg-white border border-catalyst-500 text-catalyst-600 font-medium text-center w-full px-4 py-2 rounded-lg flex items-center justify-center"
+                >
+                  <UserPlus size={18} className="mr-2" />
+                  Register
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-catalyst-600 font-medium text-center w-full px-4 py-2 rounded-lg border border-catalyst-200"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-catalyst-600 font-medium text-center w-full px-4 py-2 rounded-lg border border-catalyst-200"
+                >
+                  Log in
+                </Link>
+                <Link
+                  to="/signup"
+                  className="bg-white border border-catalyst-500 text-catalyst-600 font-medium text-center w-full px-4 py-2 rounded-lg flex items-center justify-center"
+                >
+                  <UserPlus size={18} className="mr-2" />
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
