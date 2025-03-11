@@ -6,7 +6,7 @@ const Features: React.FC = () => {
   return (
     <section id="features" className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 invisible">
+        <div className="text-center mb-16">
           <span className="text-catalyst-600 font-semibold uppercase tracking-wider text-sm">Features</span>
           <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">Our Innovative Solutions</h2>
           <div className="w-20 h-1 bg-catalyst-500 mx-auto"></div>
@@ -16,7 +16,7 @@ const Features: React.FC = () => {
         </div>
 
         <div className="mb-16">
-          <h3 className="text-2xl font-bold mb-8 text-center text-gray-800 invisible">Smart Communication</h3>
+          <h3 className="text-2xl font-bold mb-8 text-center text-gray-800">Smart Communication</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
             <FeatureCard
               icon={
@@ -27,7 +27,6 @@ const Features: React.FC = () => {
               }
               title="Smart Receiver"
               description="Guides callers through pre-recordings in regional languages, with option to shift to a manual receiver if needed."
-              delay="0s"
               category="Communication"
             />
             
@@ -39,14 +38,13 @@ const Features: React.FC = () => {
               }
               title="Remote Treatment Support"
               description="HD-CCTV setup with network connectivity inside ambulances to provide remote instructions to people accompanying patients."
-              delay="0.2s"
               category="Communication"
             />
           </div>
         </div>
 
         <div className="mb-16">
-          <h3 className="text-2xl font-bold mb-8 text-center text-gray-800 invisible" style={{ transitionDelay: "0.2s" }}>Intelligent Mapping Technology</h3>
+          <h3 className="text-2xl font-bold mb-8 text-center text-gray-800">Intelligent Mapping Technology</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <FeatureCard
               icon={
@@ -57,7 +55,6 @@ const Features: React.FC = () => {
               }
               title="Smart Ambulance Mapping"
               description="Using GPS and tracking, we map the nearest available ambulance that suits the specific emergency requirements."
-              delay="0.4s"
               category="Mapping"
             />
             
@@ -72,7 +69,6 @@ const Features: React.FC = () => {
               }
               title="Smart Enrouting"
               description="Considers future road closures, dynamic traffic prediction, and alternate paths to predict the fastest route to patients."
-              delay="0.6s"
               category="Mapping"
             />
             
@@ -85,14 +81,13 @@ const Features: React.FC = () => {
               }
               title="Multiple Options"
               description="Select the best suitable ambulance option based on response time and pricing from government or private providers."
-              delay="0.8s"
               category="Options"
             />
           </div>
         </div>
 
         <div className="mb-16">
-          <h3 className="text-2xl font-bold mb-8 text-center text-gray-800 invisible" style={{ transitionDelay: "0.4s" }}>Performance & Future Planning</h3>
+          <h3 className="text-2xl font-bold mb-8 text-center text-gray-800">Performance & Future Planning</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <FeatureCard
               icon={
@@ -103,7 +98,6 @@ const Features: React.FC = () => {
               }
               title="Smart Review"
               description="Upon journey completion, representatives are asked for reviews with follow-up reminders for continuous service improvement."
-              delay="1.0s"
               category="Analytics"
             />
             
@@ -118,7 +112,6 @@ const Features: React.FC = () => {
               }
               title="Notifier (Phase II)"
               description="Notifies traffic control authorities and the public about upcoming ambulances through integrated map services."
-              delay="1.2s"
               category="Future"
             />
             
@@ -131,13 +124,12 @@ const Features: React.FC = () => {
               }
               title="Smart Relocation (Phase II)"
               description="Based on large datasets, optimizes ambulance network access for increased framework robustness."
-              delay="1.4s"
               category="Future"
             />
           </div>
         </div>
 
-        <div className="text-center invisible" style={{ transitionDelay: "0.6s" }}>
+        <div className="text-center">
           <h3 className="text-2xl font-bold mb-4 text-gray-800">Smart Planning (Phase II)</h3>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
             With extensive datasets, Catalyst will enable the establishment of new warehouses with targeted ambulance types in urban regions

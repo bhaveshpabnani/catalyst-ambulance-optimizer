@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
       
       <div className="container mx-auto px-4 mt-8">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1 invisible">
+          <div className="order-2 md:order-1">
             <div className="max-w-xl">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
                 <span className="text-gray-800">Optimizing</span>
@@ -37,7 +37,7 @@ const Hero: React.FC = () => {
             </div>
           </div>
           
-          <div className="order-1 md:order-2 invisible relative">
+          <div className="order-1 md:order-2 relative">
             <div className="relative">
               <div className="w-full rounded-2xl overflow-hidden shadow-2xl">
                 <div className="relative aspect-square md:aspect-auto md:h-[480px] bg-gradient-to-br from-catalyst-500 to-catalyst-600 flex items-center justify-center">

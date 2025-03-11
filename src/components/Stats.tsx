@@ -5,13 +5,9 @@ const StatCard: React.FC<{
   value: string;
   label: string;
   color: string;
-  delay: string;
-}> = ({ value, label, color, delay }) => {
+}> = ({ value, label, color }) => {
   return (
-    <div 
-      className={`invisible rounded-xl ${color} p-6 text-center transform transition-all duration-500`}
-      style={{ transitionDelay: delay }}
-    >
+    <div className={`rounded-xl ${color} p-6 text-center transform transition-all duration-500`}>
       <h3 className="text-4xl md:text-5xl font-bold mb-2">{value}</h3>
       <p className="text-sm font-medium opacity-80">{label}</p>
     </div>
@@ -22,14 +18,14 @@ const Stats: React.FC = () => {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12 invisible">
+        <div className="text-center mb-12">
           <span className="text-catalyst-600 font-semibold uppercase tracking-wider text-sm">The Problem We're Solving</span>
           <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">Ambulance Response Time Challenges</h2>
           <div className="w-20 h-1 bg-catalyst-500 mx-auto"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          <div className="invisible bg-white rounded-xl border border-gray-100 p-6 shadow-md">
+          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-md">
             <div className="flex items-start space-x-4">
               <div className="bg-red-100 p-3 rounded-full">
                 <svg className="h-8 w-8 text-red-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -43,7 +39,7 @@ const Stats: React.FC = () => {
             </div>
           </div>
 
-          <div className="invisible bg-white rounded-xl border border-gray-100 p-6 shadow-md" style={{ transitionDelay: "0.2s" }}>
+          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-md">
             <div className="flex items-start space-x-4">
               <div className="bg-amber-100 p-3 rounded-full">
                 <svg className="h-8 w-8 text-amber-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -58,7 +54,7 @@ const Stats: React.FC = () => {
             </div>
           </div>
 
-          <div className="invisible bg-white rounded-xl border border-gray-100 p-6 shadow-md" style={{ transitionDelay: "0.4s" }}>
+          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-md">
             <div className="flex items-start space-x-4">
               <div className="bg-blue-100 p-3 rounded-full">
                 <svg className="h-8 w-8 text-blue-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,25 +76,21 @@ const Stats: React.FC = () => {
             value="57%"
             label="Traffic Congestion Impact"
             color="bg-gradient-to-br from-red-500/90 to-red-600/90 text-white"
-            delay="0s"
           />
           <StatCard
             value="28%"
             label="Infrastructure Problems"
             color="bg-gradient-to-br from-amber-500/90 to-amber-600/90 text-white"
-            delay="0.2s"
           />
           <StatCard
             value="15%"
             label="Other Delay Factors"
             color="bg-gradient-to-br from-blue-500/90 to-blue-600/90 text-white"
-            delay="0.4s"
           />
           <StatCard
             value="100%"
             label="Solvable with Catalyst"
             color="bg-gradient-to-br from-catalyst-500/90 to-catalyst-600/90 text-white"
-            delay="0.6s"
           />
         </div>
       </div>

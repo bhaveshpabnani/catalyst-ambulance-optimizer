@@ -6,7 +6,7 @@ const Team: React.FC = () => {
   return (
     <section id="team" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 invisible">
+        <div className="text-center mb-16">
           <span className="text-catalyst-600 font-semibold uppercase tracking-wider text-sm">Our Team</span>
           <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">Meet the Innovators</h2>
           <div className="w-20 h-1 bg-catalyst-500 mx-auto"></div>
@@ -22,7 +22,6 @@ const Team: React.FC = () => {
             role="Co-Founder & CEO"
             description="Devansh is a third-year student pursuing Mathematics & Computing with expertise in entrepreneurship and data analysis. He has significant experience in strategy development and business operations."
             linkedin="https://linkedin.com/"
-            delay="0s"
           />
           
           <TeamCard 
@@ -31,7 +30,6 @@ const Team: React.FC = () => {
             role="Co-Founder & CTO"
             description="Jyothiraditya is a dynamic professional with expertise in AI, blockchain, and natural language processing. His technical prowess and problem-solving skills drive Catalyst's innovative technology."
             linkedin="https://linkedin.com/"
-            delay="0.2s"
           />
           
           <TeamCard 
@@ -40,7 +38,6 @@ const Team: React.FC = () => {
             role="Head of Operations"
             description="Sarah brings over 8 years of healthcare operations experience to Catalyst. Her deep understanding of emergency services has been instrumental in developing our optimized response systems."
             linkedin="https://linkedin.com/"
-            delay="0.4s"
           />
         </div>
       </div>

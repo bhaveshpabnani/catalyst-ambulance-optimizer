@@ -7,14 +7,14 @@ const AboutUs: React.FC = () => {
   return (
     <section id="about" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 invisible">
+        <div className="text-center mb-16">
           <span className="text-catalyst-600 font-semibold uppercase tracking-wider text-sm">About Us</span>
           <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">Reimagining Emergency Response</h2>
           <div className="w-20 h-1 bg-catalyst-500 mx-auto"></div>
         </div>
         
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="invisible">
+          <div>
             <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-xl">
                 <img 
@@ -47,7 +47,7 @@ const AboutUs: React.FC = () => {
             </div>
           </div>
           
-          <div className="invisible">
+          <div>
             <h3 className="text-2xl md:text-3xl font-bold mb-6">Transforming Emergency Healthcare with Technology</h3>
             <p className="text-gray-600 mb-6 leading-relaxed">
               Catalyst is a tech-based sustainable system designed to revolutionize ambulance journeys. 
