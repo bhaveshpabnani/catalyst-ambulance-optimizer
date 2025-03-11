@@ -3,13 +3,28 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { toast } from "@/components/ui/use-toast";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 const Login: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Add this function to set up reCAPTCHA
+  // Update the setupRecaptcha function
+  const setupRecaptcha = () => {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'submit-button', {
+        size: 'invisible',
+        callback: () => {
+          // Callback is optional for invisible reCAPTCHA
+        }
+      });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!phoneNumber.trim()) {
@@ -32,11 +47,22 @@ const Login: React.FC = () => {
     
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      setupRecaptcha();
+      const formattedPhoneNumber = `+91${phoneNumber}`;
+      const appVerifier = window.recaptchaVerifier;
+      const confirmationResult = await signInWithPhoneNumber(auth, formattedPhoneNumber, appVerifier);
+      window.confirmationResult = confirmationResult;
       navigate("/otp-verification", { state: { phoneNumber } });
-    }, 1000);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to send OTP",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -106,6 +132,7 @@ const Login: React.FC = () => {
           <p className="text-gray-600 mb-8">Enter your phone number to continue</p>
           
           <form onSubmit={handleSubmit}>
+            <div id="recaptcha-container"></div>
             <div className="mb-6">
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                 Phone Number
@@ -125,6 +152,7 @@ const Login: React.FC = () => {
             </div>
             
             <button
+              id="submit-button" // Add this ID for reCAPTCHA
               type="submit"
               className="cta-button w-full flex items-center justify-center"
               disabled={isLoading}

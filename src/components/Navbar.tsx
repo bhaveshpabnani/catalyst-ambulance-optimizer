@@ -60,12 +60,16 @@ const Navbar: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
     setIsMenuOpen(false);
     
-    // Remove the # from the href
-    const id = sectionId.replace("#", "");
+    // Remove the /# from the href
+    const id = sectionId.replace("/#", "");
     
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const offsetTop = element.offsetTop;
+      window.scrollTo({
+        top: offsetTop - 20, // Adjust this value based on your navbar height
+        behavior: "smooth"
+      });
     }
   };
 
@@ -137,12 +141,6 @@ const Navbar: React.FC = () => {
             >
               <UserPlus size={18} className="mr-2" />
               Register
-            </Link>
-            <Link
-              to="/login"
-              className="cta-button"
-            >
-              Book Now
             </Link>
           </div>
         </div>
@@ -221,12 +219,6 @@ const Navbar: React.FC = () => {
             >
               <UserPlus size={18} className="mr-2" />
               Register
-            </Link>
-            <Link
-              to="/login"
-              className="cta-button text-center w-full"
-            >
-              Book Now
             </Link>
           </div>
         </div>
