@@ -15,20 +15,23 @@ const queryClient = new QueryClient();
 const App = () => {
   // Add scroll animation observer
   useEffect(() => {
-    // Add CSS for animations
+    // Add CSS for animations - simplified to ensure visibility
     const style = document.createElement('style');
     style.textContent = `
+      /* Remove the invisible initial state to make sure content is always visible */
       .invisible {
-        opacity: 0;
-        transform: translateY(20px);
+        opacity: 1;
+        transform: translateY(0);
         transition: opacity 0.6s ease, transform 0.6s ease;
       }
+      
+      /* Add a subtle animation when elements become visible */
       .visible {
         opacity: 1;
         transform: translateY(0);
       }
       
-      /* Animation for feature cards */
+      /* Keep other animations */
       .feature-card {
         transition: all 0.4s ease;
       }
@@ -127,6 +130,8 @@ const App = () => {
     `;
     document.head.appendChild(style);
 
+    // The intersection observer will still add the visible class
+    // but elements are already visible
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {

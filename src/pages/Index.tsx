@@ -10,24 +10,11 @@ import Footer from "@/components/Footer";
 
 const Index: React.FC = () => {
   useEffect(() => {
-    // Initialize scroll animations
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
+    // Simplified approach - set everything visible right away
     const elements = document.querySelectorAll(".invisible");
-    elements.forEach((el) => observer.observe(el));
-
-    return () => {
-      elements.forEach((el) => observer.unobserve(el));
-    };
+    elements.forEach((el) => {
+      el.classList.add("visible");
+    });
   }, []);
 
   return (

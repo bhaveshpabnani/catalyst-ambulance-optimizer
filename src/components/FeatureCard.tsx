@@ -18,8 +18,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 }) => {
   return (
     <div 
-      className="invisible feature-card group bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300"
-      style={{ transitionDelay: delay }}
+      className="feature-card group bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300"
     >
       {category && (
         <span className="inline-block px-3 py-1 bg-catalyst-100 text-catalyst-600 rounded-full text-xs font-medium mb-4">
