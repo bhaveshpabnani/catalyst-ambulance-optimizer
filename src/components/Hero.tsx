@@ -6,10 +6,20 @@ import { PhoneCall } from "lucide-react";
 const Hero: React.FC = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-16 overflow-hidden">
-      {/* Background Elements */}
+      {/* Enhanced Background Elements */}
       <div className="absolute top-0 right-0 -z-10 w-full h-full overflow-hidden">
-        <div className="absolute top-[10%] right-[5%] w-64 h-64 bg-catalyst-100 rounded-full opacity-30 blur-3xl animate-float"></div>
-        <div className="absolute bottom-[15%] left-[5%] w-72 h-72 bg-blue-100 rounded-full opacity-20 blur-3xl animate-float" style={{ animationDelay: "1s" }}></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-50 via-white to-catalyst-50"></div>
+        <div className="absolute top-[10%] right-[5%] w-64 h-64 bg-catalyst-100 rounded-full opacity-30 blur-3xl"></div>
+        <div className="absolute bottom-[15%] left-[5%] w-72 h-72 bg-blue-100 rounded-full opacity-20 blur-3xl"></div>
+        
+        {/* Decorative Elements */}
+        <div className="absolute top-[30%] left-[20%] w-16 h-16 bg-catalyst-200 rounded-full opacity-20"></div>
+        <div className="absolute top-[60%] right-[30%] w-24 h-24 bg-blue-100 rounded-full opacity-15"></div>
+        <div className="absolute top-[15%] left-[40%] w-8 h-8 bg-catalyst-300 rounded-full opacity-10"></div>
+        
+        {/* Abstract Shapes */}
+        <div className="absolute bottom-[30%] right-[15%] w-32 h-4 bg-catalyst-100 rounded-full opacity-30 rotate-45"></div>
+        <div className="absolute top-[40%] right-[25%] w-4 h-32 bg-blue-100 rounded-full opacity-20 -rotate-12"></div>
       </div>
       
       <div className="container mx-auto px-4 mt-8">
@@ -41,11 +51,6 @@ const Hero: React.FC = () => {
             <div className="relative">
               <div className="w-full rounded-2xl overflow-hidden shadow-2xl">
                 <div className="relative aspect-square md:aspect-auto md:h-[480px] bg-gradient-to-br from-catalyst-500 to-catalyst-600 flex items-center justify-center">
-                  <img 
-                    src="/lovable-uploads/2b38e055-b8ac-458a-b287-d56ec98f013d.png" 
-                    alt="Ambulance service" 
-                    className="w-full h-full object-cover mix-blend-overlay opacity-50"
-                  />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-3/4 aspect-video rounded-xl bg-white/90 backdrop-blur-sm shadow-lg p-8 flex flex-col items-center justify-center">
                       <div className="mb-4 p-4 rounded-full bg-catalyst-100">

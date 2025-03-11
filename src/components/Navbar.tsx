@@ -1,10 +1,15 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, UserPlus } from "lucide-react";
 
 interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface ServiceItem {
   label: string;
   href: string;
 }
@@ -16,9 +21,19 @@ const navItems: NavItem[] = [
   { label: "Team", href: "/#team" },
 ];
 
+const serviceItems: ServiceItem[] = [
+  { label: "Basic Ambulance", href: "/#services" },
+  { label: "Advance/Cardiac Ambulance", href: "/#services" },
+  { label: "Air Ambulance", href: "/#services" },
+  { label: "Ambulance For Events", href: "/#services" },
+  { label: "Hearse Ambulance", href: "/#services" },
+];
+
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +43,19 @@ const Navbar: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (servicesRef.current && !servicesRef.current.contains(event.target as Node)) {
+        setIsServicesOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [servicesRef]);
 
   const scrollToSection = (sectionId: string) => {
     setIsMenuOpen(false);
@@ -66,6 +94,34 @@ const Navbar: React.FC = () => {
                 {item.label}
               </a>
             ))}
+            {/* Services Dropdown */}
+            <div className="relative" ref={servicesRef}>
+              <button
+                onClick={() => setIsServicesOpen(!isServicesOpen)}
+                className="flex items-center text-gray-700 hover:text-catalyst-600 font-medium focus:outline-none"
+              >
+                <span>Services</span>
+                <ChevronDown size={16} className={`ml-1 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {isServicesOpen && (
+                <div className="absolute top-full left-0 mt-2 bg-white rounded-lg shadow-lg py-2 w-64 z-20">
+                  {serviceItems.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection(item.href);
+                        setIsServicesOpen(false);
+                      }}
+                      className="block px-4 py-2 text-gray-700 hover:bg-catalyst-50 hover:text-catalyst-600"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
           
           <div className="flex items-center space-x-4">
@@ -74,6 +130,13 @@ const Navbar: React.FC = () => {
               className="text-catalyst-600 font-medium px-4 py-2 rounded-lg hover:bg-catalyst-50 transition-colors"
             >
               Login
+            </Link>
+            <Link
+              to="/register"
+              className="bg-white border border-catalyst-500 text-catalyst-600 font-medium rounded-lg px-4 py-2 flex items-center transition-colors hover:bg-catalyst-50"
+            >
+              <UserPlus size={18} className="mr-2" />
+              Register
             </Link>
             <Link
               to="/login"
@@ -96,7 +159,7 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       <div
         className={`absolute top-full left-0 right-0 bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+          isMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
         }`}
       >
         <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
@@ -113,12 +176,51 @@ const Navbar: React.FC = () => {
               {item.label}
             </a>
           ))}
+          
+          {/* Mobile Services Dropdown */}
+          <div className="py-2">
+            <button
+              onClick={() => setIsServicesOpen(!isServicesOpen)}
+              className="flex items-center text-gray-700 hover:text-catalyst-600 font-medium w-full text-left"
+            >
+              <span>Services</span>
+              <ChevronDown size={16} className={`ml-1 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+            </button>
+            <div
+              className={`pl-4 mt-2 space-y-2 transition-all duration-300 ${
+                isServicesOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+              }`}
+            >
+              {serviceItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item.href);
+                    setIsMenuOpen(false);
+                  }}
+                  className="block py-2 text-gray-600 hover:text-catalyst-600"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
+          
           <div className="flex flex-col space-y-3 pt-2">
             <Link
               to="/login"
               className="text-catalyst-600 font-medium text-center w-full px-4 py-2 rounded-lg border border-catalyst-200"
             >
               Login
+            </Link>
+            <Link
+              to="/register"
+              className="bg-white border border-catalyst-500 text-catalyst-600 font-medium text-center w-full px-4 py-2 rounded-lg flex items-center justify-center"
+            >
+              <UserPlus size={18} className="mr-2" />
+              Register
             </Link>
             <Link
               to="/login"

@@ -6,6 +6,7 @@ import AboutUs from "@/components/AboutUs";
 import Stats from "@/components/Stats";
 import Features from "@/components/Features";
 import Team from "@/components/Team";
+import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 const Index: React.FC = () => {
@@ -18,6 +19,7 @@ const Index: React.FC = () => {
         <Stats />
         <Features />
         <Team />
+        <Testimonials />
       </main>
       <Footer />
     </div>
