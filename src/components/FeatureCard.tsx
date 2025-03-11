@@ -18,7 +18,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 }) => {
   return (
     <div 
-      className="invisible feature-card group"
+      className="invisible feature-card group bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300"
       style={{ transitionDelay: delay }}
     >
       {category && (
