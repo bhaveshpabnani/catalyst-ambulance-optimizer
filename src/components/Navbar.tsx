@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import { ChevronDown, Menu, X, UserPlus, User, LogOut } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface NavItem {
   label: string;
@@ -101,20 +102,40 @@ const Navbar: React.FC = () => {
     };
   }, [profileRef]);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Update the scrollToSection function
   const scrollToSection = (sectionId: string) => {
     setIsMenuOpen(false);
     
     // Remove the /# from the href
     const id = sectionId.replace("/#", "");
     
-    const element = document.getElementById(id);
-    if (element) {
-      const offsetTop = element.offsetTop;
-      window.scrollTo({
-        top: offsetTop - 20, // Adjust this value based on your navbar height
-        behavior: "smooth"
-      });
+    if (location.pathname !== "/") {
+      // If we're not on the home page, navigate to home and then scroll
+      navigate("/");
+      // Wait for navigation to complete before scrolling
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          window.scrollTo({
+            top: element.offsetTop - 20,
+            behavior: "smooth"
+          });
+        }
+      }, 100);
+    } else {
+      // If we're on the home page, just scroll
+      const element = document.getElementById(id);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop - 20,
+          behavior: "smooth"
+        });
+      }
     }
+    
   };
 
   const renderAuthButtons = () => {
@@ -145,6 +166,13 @@ const Navbar: React.FC = () => {
             
             {isProfileOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+                <Link
+                  to="/profile"
+                  className="w-full px-4 py-2 text-left text-gray-700 hover:bg-catalyst-50 hover:text-catalyst-600 flex items-center"
+                >
+                  <User size={16} className="mr-2" />
+                  Profile
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="w-full px-4 py-2 text-left text-gray-700 hover:bg-catalyst-50 hover:text-catalyst-600 flex items-center"

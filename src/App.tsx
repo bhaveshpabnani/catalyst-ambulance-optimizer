@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import OTPVerification from "@/pages/OtpVerification";
 import NotFound from "./pages/NotFound";
 import Signup from "@/pages/Signup";
+import Profile from "@/pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/otp-verification" element={<OTPVerification />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

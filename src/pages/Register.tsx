@@ -1,17 +1,37 @@
 
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useCallback, useRef, useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MapPin, Locate, MapIcon } from "lucide-react";
+import { GoogleMap, Marker, useJsApiLoader, Autocomplete } from "@react-google-maps/api";
+import { useNavigate } from "react-router-dom";
+
+
+const containerStyle = {
+  width: '100%',
+  height: '400px',
+};
+
+const defaultCenter = {
+  lat: 40.749933,
+  lng: -73.98633,
+};
+
+
 
 const Register: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [parkingLocation, setParkingLocation] = useState("");
+  const [mapCenter, setMapCenter] = useState(defaultCenter);
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  const [markerPosition, setMarkerPosition] = useState(defaultCenter);
+
+
+  // Remove the address field from formData state
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -21,9 +41,39 @@ const Register: React.FC = () => {
     experience: "",
     ambulanceType: "",
     registrationNumber: "",
-    address: "",
     parkingLocation: "Choose on map",
+    latitude: defaultCenter.lat,
+    longitude: defaultCenter.lng,
   });
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyAcSiKsB76rBbOGky-DYvIqvwjaw8ENSzs",
+    libraries: ["places"],
+  });
+
+  const onLoadAutocomplete = useCallback((autocomplete: google.maps.places.Autocomplete) => {
+    autocompleteRef.current = autocomplete;
+  }, []);
+
+  const onPlaceChanged = () => {
+    if (autocompleteRef.current) {
+      const place = autocompleteRef.current.getPlace();
+
+      if (!place.geometry || !place.geometry.location) {
+        alert("No details available for the selected location.");
+        return;
+      }
+
+      const location = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+      };
+
+      setParkingLocation(place.formatted_address || "");
+      setMapCenter(location);
+      setMarkerPosition(location);
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -34,7 +84,43 @@ const Register: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // Update handleNext function
   const handleNext = () => {
+    if (currentStep === 1) {
+      if (!formData.firstName.trim()) {
+        alert("Please enter your first name");
+        return;
+      }
+      if (!formData.lastName.trim()) {
+        alert("Please enter your last name");
+        return;
+      }
+      if (!formData.email.trim()) {
+        alert("Please enter your email address");
+        return;
+      }
+      if (!formData.phone.trim()) {
+        alert("Please enter your phone number");
+        return;
+      }
+      if (!formData.licenseNumber.trim()) {
+        alert("Please enter your license number");
+        return;
+      }
+      if (!formData.experience) {
+        alert("Please select your years of experience");
+        return;
+      }
+    } else if (currentStep === 2) {
+      if (!formData.ambulanceType) {
+        alert("Please select ambulance type");
+        return;
+      }
+      if (!formData.registrationNumber.trim()) {
+        alert("Please enter vehicle registration number");
+        return;
+      }
+    }
     setCurrentStep(currentStep + 1);
   };
 
@@ -44,10 +130,31 @@ const Register: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.parkingLocation || formData.parkingLocation === "Choose on map") {
+      alert("Please select a parking location");
+      return;
+    }
+    if (!formData.latitude || !formData.longitude) {
+      alert("Please mark your location on the map");
+      return;
+    }
+  
+    try {
+      // Store the registration data in localStorage
+      localStorage.setItem('driverProfile', JSON.stringify(formData));
+    const navigate = useNavigate();
+    navigate('/profile');
+    } catch (error) {
+      console.error('Error storing profile:', error);
+      alert('Failed to complete registration. Please try again.');
+    }
+  
     // Form submission logic here
     console.log("Form submitted:", formData);
     // Redirect to success page or show success message
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -162,6 +269,7 @@ const Register: React.FC = () => {
                       <Select 
                         onValueChange={(value) => handleSelectChange("experience", value)}
                         value={formData.experience}
+                        required
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select years of experience" />
@@ -185,6 +293,7 @@ const Register: React.FC = () => {
                       <Select
                         onValueChange={(value) => handleSelectChange("ambulanceType", value)}
                         value={formData.ambulanceType}
+                        required
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select ambulance type" />
@@ -209,18 +318,6 @@ const Register: React.FC = () => {
                         required
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="address">Ambulance Base Address</Label>
-                      <Textarea
-                        id="address"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleInputChange}
-                        placeholder="Enter your base address"
-                        rows={3}
-                        required
-                      />
-                    </div>
                   </div>
                 )}
 
@@ -229,36 +326,130 @@ const Register: React.FC = () => {
                     <h2 className="text-xl font-semibold text-gray-800 mb-4">Location Information</h2>
                     <div className="mb-4">
                       <Label htmlFor="parkingLocation">Ambulance Parking Location</Label>
-                      <div className="mt-2 relative">
-                        <Input
-                          id="parkingLocation"
-                          name="parkingLocation"
-                          value={formData.parkingLocation}
-                          onChange={handleInputChange}
-                          placeholder="Search for a location"
-                          className="pr-10"
-                        />
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                          <MapPin className="h-5 w-5 text-gray-400" />
+                      {isLoaded ? (
+                      <>
+                        <div className="mt-2">
+                          <Autocomplete
+                            onLoad={onLoadAutocomplete}
+                            onPlaceChanged={onPlaceChanged}
+                          >
+                            <div className="relative">
+                              <Input
+                                id="parkingLocation"
+                                name="parkingLocation"
+                                value={formData.parkingLocation}
+                                onChange={handleInputChange}
+                                placeholder="Search for a location"
+                                className="pr-10"
+                                required
+                              />
+                              <MapPin className="absolute right-3 top-3 h-5 w-5 text-gray-400" />
+                            </div>
+                          </Autocomplete>
+                        </div>
+
+                        <div className="flex mt-2 space-x-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            className="flex items-center"
+                            onClick={() => {
+                              if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition((position) => {
+                                  const location = {
+                                    lat: position.coords.latitude,
+                                    lng: position.coords.longitude,
+                                  };
+                                  setMapCenter(location);
+                                  setMarkerPosition(location);
+
+                                  const geocoder = new google.maps.Geocoder();
+                                  geocoder.geocode({ location }, (results, status) => {
+                                    if (status === "OK" && results?.[0]) {
+                                      setFormData(prev => ({
+                                        ...prev,
+                                        parkingLocation: results[0].formatted_address,
+                                        latitude: location.lat,
+                                        longitude: location.lng,
+                                      }));
+                                    }
+                                  });
+                                });
+                              }
+                            }}
+                          >
+                            <Locate className="h-4 w-4 mr-2" />
+                            Use Current Location
+                          </Button>
+                        </div>
+
+                        <div className="mt-4 w-full h-[400px] rounded-lg overflow-hidden border border-gray-200">
+                          <GoogleMap
+                            mapContainerStyle={containerStyle}
+                            center={mapCenter}
+                            zoom={15}
+                            onClick={(e) => {
+                              if (e.latLng) {
+                                const location = {
+                                  lat: e.latLng.lat(),
+                                  lng: e.latLng.lng(),
+                                };
+                                setMarkerPosition(location);
+                                
+                                const geocoder = new google.maps.Geocoder();
+                                geocoder.geocode({ location }, (results, status) => {
+                                  if (status === "OK" && results?.[0]) {
+                                    setFormData(prev => ({
+                                      ...prev,
+                                      parkingLocation: results[0].formatted_address,
+                                      latitude: location.lat,
+                                      longitude: location.lng,
+                                    }));
+                                  }
+                                });
+                              }
+                            }}
+                          >
+                            <Marker 
+                              position={markerPosition}
+                              draggable={true}
+                              onDragEnd={(e) => {
+                                if (e.latLng) {
+                                  const location = {
+                                    lat: e.latLng.lat(),
+                                    lng: e.latLng.lng(),
+                                  };
+                                  setMarkerPosition(location);
+                                  
+                                  const geocoder = new google.maps.Geocoder();
+                                  geocoder.geocode({ location }, (results, status) => {
+                                    if (status === "OK" && results?.[0]) {
+                                      setFormData(prev => ({
+                                        ...prev,
+                                        parkingLocation: results[0].formatted_address,
+                                        latitude: location.lat,
+                                        longitude: location.lng,
+                                      }));
+                                    }
+                                  });
+                                }
+                              }}
+                            />
+                          </GoogleMap>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="mt-4 w-full h-[400px] rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+                        <div className="text-center p-6">
+                          <MapIcon className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                          <p className="text-gray-500">Loading map...</p>
                         </div>
                       </div>
-                      <div className="flex mt-2 space-x-2">
-                        <Button type="button" variant="outline" size="sm" className="flex items-center">
-                          <Locate className="h-4 w-4 mr-2" />
-                          Use Current Location
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="border rounded-lg overflow-hidden bg-gray-100 h-[300px] flex items-center justify-center">
-                      <div className="text-center p-6">
-                        <MapIcon className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                        <p className="text-gray-500">Map would be displayed here</p>
-                        <p className="text-sm text-gray-400">Select your exact ambulance parking location</p>
-                      </div>
-                    </div>
+                    )}
                   </div>
-                )}
+                </div>
+              )}
 
                 <div className="mt-8 flex justify-between">
                   {currentStep > 1 ? (

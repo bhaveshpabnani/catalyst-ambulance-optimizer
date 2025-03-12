@@ -20,7 +20,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
 }) => {
   return (
     <div 
-      className="invisible bg-white rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-500"
+      className="invisible bg-white rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-2000"
       style={{ transitionDelay: delay }}
     >
       <div className="relative overflow-hidden">
