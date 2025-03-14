@@ -28,20 +28,20 @@ const Team: React.FC = () => {
           </div>
           <div className="animate-on-scroll delay-400">
             <TeamCard 
-              image="/assets/2728e55e-0f58-46f6-9cd2-dce2267d35f2.png"
-              name="SSVKSS Jyothiraditya"
-              role="Co-Founder & CTO"
-              description="Jyothiraditya is a dynamic professional with expertise in AI, blockchain, and natural language processing. His technical prowess and problem-solving skills drive Catalyst's innovative technology."
-              linkedin="https://linkedin.com/"
+              image="/assets/1737141751071.jpg"
+              name="Anushika Srivastava"
+              role="Co-Founder"
+              description="Anushika is pursuing Integrated B.Tech and M.Tech in Ocean Engineering at IIT Kharagpur. As General Secretary of the Students' Branding and Relations Cell, she brings strong leadership and project management expertise to Catalyst's strategic initiatives."
+              linkedin="https://www.linkedin.com/in/anushika06/"
             />
           </div>
           <div className="animate-on-scroll delay-600">
             <TeamCard 
-              image="/assets/b19b8d18-f499-42bd-9a52-5e47a1924c09.png"
-              name="Sarah Johnson"
-              role="Head of Operations"
-              description="Sarah brings over 8 years of healthcare operations experience to Catalyst. Her deep understanding of emergency services has been instrumental in developing our optimized response systems."
-              linkedin="https://linkedin.com/"
+              image="/assets/1740689782128.jpg"
+              name="Adeeba Alam Ansari"
+              role="Co-Founder"
+              description="Adeeba is a third-year Industrial and Systems Engineering student with expertise in Machine Learning and Finance. Her interdisciplinary background in computer vision and language models, combined with strong leadership and problem-solving skills, drives innovation in Catalyst's technological solutions."
+              linkedin="https://www.linkedin.com/in/adeeba-alam-ansari-b3aba1252/"
             />
           </div>
         </div>
