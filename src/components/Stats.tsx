@@ -33,8 +33,8 @@ const Stats: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">24,000 Deaths Daily</h3>
-                <p className="text-gray-600">65% of daily deaths in India are due to delayed ambulance response</p>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">10,000 Deaths Daily</h3>
+                <p className="text-gray-600">30% of daily deaths in India are due to delayed ambulance response</p>
               </div>
             </div>
           </div>

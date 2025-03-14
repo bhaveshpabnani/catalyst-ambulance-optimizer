@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import { PhoneCall } from "lucide-react";
 
 const Hero: React.FC = () => {
+  const handleEmergencyCall = () => {
+    window.location.href = "tel:+917383456780";
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-16 overflow-hidden">
       {/* Enhanced Background Elements */}
@@ -39,10 +43,13 @@ const Hero: React.FC = () => {
                 <Link to="/login" className="cta-button flex items-center justify-center">
                   <span>Book Now</span>
                 </Link>
-                <Link to="/login" className="secondary-button flex items-center justify-center">
+                <button
+                  onClick={handleEmergencyCall}
+                  className="secondary-button flex items-center justify-center"
+                >
                   <PhoneCall className="mr-2 h-5 w-5" />
                   <span>Call for Assistance</span>
-                </Link>
+                </button>
               </div>
             </div>
           </div>
