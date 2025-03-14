@@ -13,28 +13,28 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Sarah Thompson",
-    role: "Heart Surgery Patient",
-    content: "The Catalyst ambulance service arrived within minutes of our emergency call. Their swift response and professional care during transport to the hospital was truly lifesaving. I can't thank the team enough for their exceptional service.",
-    image: "/lovable-uploads/4cec834c-0a51-45b7-97b2-7ac3bdd0fe7f.png",
+    name: "Rajesh Kumar",
+    role: "Emergency Patient",
+    content: "The smart receiver system was incredibly helpful. Even though I was panicking, the regional language support helped me communicate effectively. The ambulance arrived within minutes, and the remote treatment support during transit was reassuring.",
+    image: "/assets/testimonial1.jpg",
   },
   {
     id: 2,
-    name: "Michael Rodriguez",
-    role: "Accident Victim",
-    content: "After my car accident, I was in critical condition. The paramedics from Catalyst not only provided immediate medical attention but also ensured I remained calm during the journey. Their advanced equipment and expertise made all the difference.",
+    name: "Priya Sharma",
+    role: "Accident Witness",
+    content: "I used Catalyst when I witnessed a road accident. Their smart mapping system quickly located the nearest ambulance, and their enrouting feature helped navigate through heavy traffic. The multiple options for choosing between government and private ambulances was very useful.",
   },
   {
     id: 3,
-    name: "Emily Parker",
-    role: "Event Organizer",
-    content: "We hired Catalyst's ambulance services for our annual marathon event. Their team was professional, alert, and ready to respond to any emergency. The peace of mind they provided allowed us to focus on running a successful event.",
+    name: "Amit Patel",
+    role: "Marathon Event Director",
+    content: "We partnered with Catalyst for our city marathon. Their HD-CCTV equipped ambulances and remote treatment support provided excellent medical coverage. The smart review system helped us gather valuable feedback to improve future events.",
   },
   {
     id: 4,
-    name: "David Wilson",
-    role: "Elderly Care Patient",
-    content: "As someone with chronic health issues, I've used many ambulance services over the years. Catalyst stands out for their compassionate approach, careful handling, and the way they communicate every step of the transport process.",
+    name: "Meera Reddy",
+    role: "Family Member",
+    content: "When my father needed urgent medical attention, Catalyst's multiple ambulance options helped us choose the most suitable service. The remote treatment support during transit and their professional communication made a difficult situation much easier to handle.",
   },
 ];
 
@@ -80,7 +80,11 @@ const Testimonials: React.FC = () => {
               <div
                 key={testimonial.id}
                 className={`absolute inset-0 transition-all duration-500 bg-white rounded-xl shadow-lg p-8 flex flex-col
-                  ${index === activeIndex ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"}`}
+                  ${index === activeIndex 
+                    ? "opacity-100 translate-x-0" 
+                    : index < activeIndex 
+                      ? "opacity-0 -translate-x-full pointer-events-none" 
+                      : "opacity-0 translate-x-full pointer-events-none"}`}
               >
                 <div className="mb-6 text-catalyst-500">
                   <Quote size={48} className="opacity-20" />
