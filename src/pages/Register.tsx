@@ -9,6 +9,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MapPin, Locate, MapIcon } from "lucide-react";
 import { GoogleMap, Marker, useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import { useNavigate } from "react-router-dom";
+import dotenv from 'dotenv'; 
+dotenv.config();  // Load environment variables from .env file 
+const GMAPS_API_KEY = process.env.GMAPS_API_KEY;
 
 
 const containerStyle = {
@@ -47,7 +50,7 @@ const Register: React.FC = () => {
   });
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyAcSiKsB76rBbOGky-DYvIqvwjaw8ENSzs",
+    googleMapsApiKey: GMAPS_API_KEY,
     libraries: ["places"],
   });
 
